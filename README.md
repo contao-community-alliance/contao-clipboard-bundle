@@ -1,0 +1,179 @@
+[![Build Status](https://github.com/contao-community-alliance/contao-clipboard-bundle/actions/workflows/diagnostics.yml/badge.svg)](https://github.com/contao-community-alliance/contao-clipboard-bundle/actions)
+[![Latest Version tagged](http://img.shields.io/github/tag/contao-community-alliance/contao-clipboard-bundle.svg)](https://github.com/contao-community-alliance/contao-clipboard-bundle/tags)
+[![Latest Version on Packagist](http://img.shields.io/packagist/v/contao-community-alliance/contao-clipboard-bundle.svg)](https://packagist.org/packages/contao-community-alliance/contao-clipboard-bundle)
+[![Installations via composer per month](http://img.shields.io/packagist/dm/contao-community-alliance/contao-clipboard-bundle.svg)](https://packagist.org/packages/contao-community-alliance/contao-clipboard-bundle)
+
+# Contao Clipboard
+
+> **Preview des Fundraising-Standes.** Der Code ist zurzeit noch nicht öffentlich erreichbar und wird erst nach Ablauf
+> des Fundraisings freigegeben. Bei Fragen zum Fundraising bitte E-Mail an zonky2 <info@e-spin.de>.
+>
+> **Preview of the fundraising state.** The code is not publicly available at the moment and will be released after the
+> end of the fundraising. For questions about the fundraising please send an e-mail to zonky2 <info@e-spin.de>.
+
+**Deutsch** | [English below](#english)
+
+## Deutsch
+
+### Über die Erweiterung
+
+Das Clipboard speichert Seiten, Artikel, Inhaltselemente und Frontend-Module für längere Zeit und fügt sie bei
+Bedarf wieder ein, auch in einer anderen Contao-Installation.
+
+* Die Einträge stehen im Backend in der Navigation, in einer Gruppe wie bei den Favoriten. Sie sind kontextbezogen:
+  Bei den Seiten stehen die Seiten-Einträge, bei den Artikeln die Artikel und Inhaltselemente, bei den Modulen die
+  Module, an anderer Stelle alle.
+* Ein Klick macht einen Eintrag zum aktiven. Je Typ (Seite, Artikel, Inhaltselement, Modul) kann ein Eintrag aktiv
+  sein, er wird von den Einfügen-Buttons dieses Typs verwendet. Ein weiterer Klick auf den aktiven Eintrag
+  deaktiviert ihn wieder, dann verschwinden die Einfügen-Buttons. Der Tooltip der Einfügen-Buttons nennt den Eintrag.
+* Jede Liste mit Seiten, Artikeln, Inhaltselementen und Modulen hat Buttons, um einen Datensatz in das Clipboard zu
+  kopieren und den aktiven Eintrag dahinter einzufügen (Seiten auch hinein). Ausgewählte Datensätze lassen sich als
+  Gruppe kopieren.
+* Einträge lassen sich mit Benutzergruppen teilen. Jedes Mitglied darf sie verwenden. Wer das Recht "Clipboard-Einträge
+  teilen" in der Benutzergruppe hat, darf sie anlegen, umbenennen und löschen.
+* Die Verwaltung unter *System* listet die Einträge und benennt sie um, löscht, teilt, exportiert und importiert sie.
+
+Die Einträge liegen als YAML-Dateien in `var/clipboard/user/<ID des Benutzers>/` und `var/clipboard/group/<ID der
+Gruppe>/`. Sie sind lesbar und lassen sich mit Export und Import der Verwaltung in eine andere Installation
+übertragen (eine Datei oder, für mehrere Einträge, ein ZIP-Archiv).
+
+### Systemvoraussetzungen
+
+* PHP 8.2 oder höher
+* Contao 5.3
+
+### Installation und Einrichtung
+
+Im Contao Manager nach "Clipboard" suchen und installieren, oder per Composer:
+
+`$ composer require contao-community-alliance/contao-clipboard-bundle`
+
+Danach in den Benutzerprofilen das Clipboard aktivieren (Feld "Clipboard verwenden"). Zum Teilen mit einer Gruppe
+bekommt die Benutzergruppe das Recht "Clipboard-Einträge teilen".
+
+Das Verzeichnis der Einträge lässt sich mit dem Parameter `cca_clipboard.directory` ändern.
+
+### Aufräumen
+
+Wird ein Benutzer oder eine Benutzergruppe gelöscht, werden auch ihre Clipboard-Einträge gelöscht. Bei einer Gruppe
+verschwinden damit die Einträge, die mit ihr geteilt wurden. Wer sie weiter braucht, hat sie vorher in sein eigenes
+Clipboard übernommen.
+
+Für Einträge, die darüber nicht erfasst wurden (zum Beispiel nach dem Löschen direkt in der Datenbank), gibt es einen
+Befehl:
+
+```
+$ php vendor/bin/contao-console cca-clipboard:cleanup --dry-run   # zeigt nur, was entfernt würde
+$ php vendor/bin/contao-console cca-clipboard:cleanup
+```
+
+Er lässt sich auch regelmäßig per Cron aufrufen.
+
+### Icons
+
+Die Icons sind den Clipboard-Icons von [Lucide](https://lucide.dev) nachempfunden (ISC-Lizenz, siehe
+`public/icons/LICENSE-lucide.txt`). Das ist der Stil, den Contao seit 5.7 für die Backend-Icons verwendet.
+
+### Erweitern
+
+Statt der alten Hooks gibt es Events:
+
+* `ContaoCommunityAlliance\ClipboardBundle\Event\ContentTitleEvent`: Titel für einen Inhaltselement-Typ liefern
+* `ContaoCommunityAlliance\ClipboardBundle\Event\RecordPastedEvent`: nach dem Anlegen eines Datensatzes durch Einfügen
+* `ContaoCommunityAlliance\ClipboardBundle\Event\RecordsPastedEvent`: nach dem Einfügen einer Gruppe
+
+### Ursprüngliche Idee von MAN AT WORK GmbH
+
+Danke für die erste Version des Contao Clipboards. Mehr zu MAW: https://www.men-at-work.de/
+
+### Screenshots
+
+Die Navigation mit dem eigenen Clipboard und dem der Gruppe "Redakteure". Der aktive Eintrag ist markiert:
+
+![Die Einträge in der Navigation des Backends](docs/be_navigation.png)
+
+Die Buttons einer Seitenliste. Der Tooltip der Einfügen-Buttons nennt den aktiven Eintrag:
+
+![Die Buttons in der Seitenliste](docs/be_page_include.png)
+
+## English
+
+[Deutsch oben](#deutsch)
+
+### About
+
+The clipboard extension offers the possibility to store pages, articles, content elements and frontend modules
+in a clipboard for an extended time-period and to paste them again, also in another installation of Contao.
+
+* The entries of the clipboard are listed in the navigation of the backend, in a group like the favorites. They
+  depend on the context: with the pages those of pages, with the articles those of articles and content elements,
+  with the modules those of modules, elsewhere all of them.
+* A click on an entry makes it the active one. One entry per type (page, article, content element, module) can be
+  active, and it is used by the paste buttons of this type. Another click on the active entry deactivates it, then
+  the paste buttons disappear. The tooltip of the paste buttons names the entry.
+* Every list of pages, articles, content elements and modules has the buttons to copy a record to the clipboard
+  and to paste the active entry behind it (pages also into it). Selected records can be copied as a group.
+* Entries can be shared with user groups. Every member may use them. Those who have the permission "Share clipboard
+  entries" in the user group may create, rename and delete them.
+* The administration under *System* lists the entries and renames, deletes, shares, exports and imports them.
+
+The entries are stored as YAML files in `var/clipboard/user/<user id>/` and `var/clipboard/group/<group id>/`.
+They are readable and can be transferred to another installation with the export and import of the
+administration (a file, or a ZIP archive for several entries).
+
+### System requirements
+
+* PHP 8.2 or higher
+* Contao 5.3
+
+### Installation & Configuration
+
+Typing in Contao Manager "Clipboard" and install or use composer
+
+`$ composer require contao-community-alliance/contao-clipboard-bundle`
+
+Then enable the clipboard for the users in their profile (field "Enable clipboard"). To share entries with a group,
+give the user group the permission "Share clipboard entries".
+
+The directory of the entries can be changed with the parameter `cca_clipboard.directory`.
+
+### Cleaning up
+
+When a user or a user group is deleted, its clipboard entries are deleted with it. For a group these are the entries
+which have been shared with it. Those who still need them have adopted them into their own clipboard before.
+
+For entries this did not catch (for example after a deletion directly in the database) there is a command:
+
+```
+$ php vendor/bin/contao-console cca-clipboard:cleanup --dry-run   # only lists what would be removed
+$ php vendor/bin/contao-console cca-clipboard:cleanup
+```
+
+It can also be called regularly with cron.
+
+### Icons
+
+The icons are drawn after the clipboard icons of [Lucide](https://lucide.dev) (ISC license, see
+`public/icons/LICENSE-lucide.txt`), which is the style Contao uses for its backend icons since 5.7.
+
+### Extending
+
+Listen to the events instead of the old hooks:
+
+* `ContaoCommunityAlliance\ClipboardBundle\Event\ContentTitleEvent` to provide the title of a content element type
+* `ContaoCommunityAlliance\ClipboardBundle\Event\RecordPastedEvent` after a record has been created by pasting
+* `ContaoCommunityAlliance\ClipboardBundle\Event\RecordsPastedEvent` after a group has been pasted
+
+### Original idea by MAN AT WORK GmbH
+
+Thanks for the first version of the Contao Clipboard. More to MAW https://www.men-at-work.de/
+
+### Screenshots
+
+The navigation with the own clipboard and the one of the group "Redakteure". The active entry is marked:
+
+![The entries in the navigation of the backend](docs/be_navigation.png)
+
+The buttons of a list of pages. The tooltip of the paste buttons names the active entry:
+
+![The buttons in the list of pages](docs/be_page_include.png)

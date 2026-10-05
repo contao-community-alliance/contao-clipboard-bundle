@@ -39,8 +39,8 @@ Gruppe>/`. Sie sind lesbar und lassen sich mit Export und Import der Verwaltung 
 
 ### Systemvoraussetzungen
 
-* PHP 8.2 oder höher
-* Contao 5.3
+* PHP 8.3 oder höher
+* Contao 5.3 bis 5.7
 
 ### Installation und Einrichtung
 
@@ -96,6 +96,14 @@ Die Buttons einer Seitenliste. Der Tooltip der Einfügen-Buttons nennt den aktiv
 
 ![Die Buttons in der Seitenliste](docs/be_page_include.png)
 
+Die Clipboard-Verwaltung unter "System": Umbenennen, Aktivieren (Auge), Löschen, Exportieren, Teilen mit Gruppen und Import. Die Zahl zeigt alle Datensätze eines Eintrags:
+
+![Die Clipboard-Verwaltung](docs/be_administration.png)
+
+Das (i)-Icon neben der Zahl öffnet den Inhalt des Eintrags als Baum mit Typ und Titel:
+
+![Der Inhalt eines Eintrags](docs/be_item_info.png)
+
 ## English
 
 [Deutsch oben](#deutsch)
@@ -123,8 +131,8 @@ administration (a file, or a ZIP archive for several entries).
 
 ### System requirements
 
-* PHP 8.2 or higher
-* Contao 5.3
+* PHP 8.3 or higher
+* Contao 5.3 to 5.7
 
 ### Installation & Configuration
 
@@ -177,3 +185,11 @@ The navigation with the own clipboard and the one of the group "Redakteure". The
 The buttons of a list of pages. The tooltip of the paste buttons names the active entry:
 
 ![The buttons in the list of pages](docs/be_page_include.png)
+
+The clipboard administration under "System": rename, activate (eye), delete, export, share with groups and import. The number shows all records of an entry:
+
+![The clipboard administration](docs/be_administration.png)
+
+The (i) icon next to the number opens the content of the entry as a tree with type and title:
+
+![The content of an entry](docs/be_item_info.png)

@@ -17,17 +17,19 @@
 
 ### Über die Erweiterung
 
-Das Clipboard speichert Seiten, Artikel, Inhaltselemente und Frontend-Module für längere Zeit und fügt sie bei
-Bedarf wieder ein, auch in einer anderen Contao-Installation.
+Das Clipboard speichert Seiten, Artikel, Inhaltselemente (auch die von News, Events und anderen Erweiterungen),
+Frontend-Module, Formulare und Formularfelder für längere Zeit und fügt sie bei Bedarf wieder ein, auch in einer
+anderen Contao-Installation.
 
 * Die Einträge stehen im Backend in der Navigation, in einer Gruppe wie bei den Favoriten. Sie sind kontextbezogen:
-  Bei den Seiten stehen die Seiten-Einträge, bei den Artikeln die Artikel und Inhaltselemente, bei den Modulen die
-  Module, an anderer Stelle alle.
+  Ein Backend-Modul zeigt die Einträge der Tabellen, die es selbst verwaltet. Bei den Seiten stehen die Seiten, bei
+  den Artikeln die Artikel und Inhaltselemente, bei News auch die Inhaltselemente, bei den Formularen die Formulare
+  und Formularfelder. In Modulen ohne solche Datensätze (zum Beispiel den Einstellungen) fehlt die Gruppe ganz.
 * Ein Klick macht einen Eintrag zum aktiven. Je Typ (Seite, Artikel, Inhaltselement, Modul) kann ein Eintrag aktiv
   sein, er wird von den Einfügen-Buttons dieses Typs verwendet. Ein weiterer Klick auf den aktiven Eintrag
   deaktiviert ihn wieder, dann verschwinden die Einfügen-Buttons. Der Tooltip der Einfügen-Buttons nennt den Eintrag.
-* Jede Liste mit Seiten, Artikeln, Inhaltselementen und Modulen hat Buttons, um einen Datensatz in das Clipboard zu
-  kopieren und den aktiven Eintrag dahinter einzufügen (Seiten auch hinein). Ausgewählte Datensätze lassen sich als
+* Jede Liste dieser Datensätze hat Buttons, um einen Datensatz in das Clipboard zu kopieren und den aktiven Eintrag
+  dahinter einzufügen (Seiten auch hinein, Formulare und Formularfelder samt Feldern bzw. in das Formular). Ausgewählte Datensätze lassen sich als
   Gruppe kopieren.
 * Einträge lassen sich mit Benutzergruppen teilen. Jedes Mitglied darf sie verwenden. Wer das Recht "Clipboard-Einträge
   teilen" in der Benutzergruppe hat, darf sie anlegen, umbenennen und löschen.
@@ -76,11 +78,39 @@ Die Icons sind den Clipboard-Icons von [Lucide](https://lucide.dev) nachempfunde
 
 ### Erweitern
 
-Statt der alten Hooks gibt es Events:
+**Eigene Tabellen anmelden.** Ein Service, der `ContaoCommunityAlliance\ClipboardBundle\Table\TableProviderInterface`
+implementiert, wird automatisch erkannt (Tag `cca_clipboard.table_provider`) und liefert `TableDefinition`-Objekte:
+
+```php
+use ContaoCommunityAlliance\ClipboardBundle\Table\TableDefinition;
+use ContaoCommunityAlliance\ClipboardBundle\Table\TableProviderInterface;
+
+class MyTables implements TableProviderInterface
+{
+    public function tables(): iterable
+    {
+        // Positionen gehören zu einer Bestellung und werden mit ihr kopiert
+        yield new TableDefinition('tl_my_order', root: true, children: ['tl_my_item'], titleFields: ['number']);
+        yield new TableDefinition('tl_my_item', parents: ['tl_my_order'], titleFields: ['name']);
+    }
+}
+```
+
+Die Tabelle erhält die Buttons in den Listen des Backend-Moduls, das sie in seinen `tables` führt, die Einträge in der
+Navigation, das Einfügen und die Verwaltung. Mehrere Definitionen derselben Tabelle werden zusammengeführt, so kann eine
+Erweiterung einer fremden Tabelle einen Elternteil ergänzen. Die Eltern der Inhaltselemente (`tl_content`) werden wie
+in Contao aus den `ctable` der DCAs gefunden, News, Events und eigene Eltern funktionieren also ohne Zutun.
+
+**Events** statt der alten Hooks:
 
 * `ContaoCommunityAlliance\ClipboardBundle\Event\ContentTitleEvent`: Titel für einen Inhaltselement-Typ liefern
+* `ContaoCommunityAlliance\ClipboardBundle\Event\RecordCollectedEvent`: beim Kopieren, die Felder eines Datensatzes ändern
+* `ContaoCommunityAlliance\ClipboardBundle\Event\PrepareRecordEvent`: vor dem Einfügen, Felder ändern oder den Datensatz
+  überspringen (mit seinen Kindern)
 * `ContaoCommunityAlliance\ClipboardBundle\Event\RecordPastedEvent`: nach dem Anlegen eines Datensatzes durch Einfügen
 * `ContaoCommunityAlliance\ClipboardBundle\Event\RecordsPastedEvent`: nach dem Einfügen einer Gruppe
+
+Die Bezeichnung des Typs in der Navigation und der Verwaltung kommt aus `MSC.clipboardType_<Tabelle>`.
 
 ### Ursprüngliche Idee von MAN AT WORK GmbH
 
@@ -110,17 +140,19 @@ Das (i)-Icon neben der Zahl öffnet den Inhalt des Eintrags als Baum mit Typ und
 
 ### About
 
-The clipboard extension offers the possibility to store pages, articles, content elements and frontend modules
-in a clipboard for an extended time-period and to paste them again, also in another installation of Contao.
+The clipboard extension offers the possibility to store pages, articles, content elements (also those of news,
+events and other extensions), frontend modules, forms and form fields in a clipboard for an extended time-period and
+to paste them again, also in another installation of Contao.
 
 * The entries of the clipboard are listed in the navigation of the backend, in a group like the favorites. They
-  depend on the context: with the pages those of pages, with the articles those of articles and content elements,
-  with the modules those of modules, elsewhere all of them.
+  depend on the context: a backend module shows the entries of the tables it manages itself. With the pages those of
+  pages, with the articles those of articles and content elements, with news also the content elements, with the forms
+  those of forms and form fields. The group is missing in modules without such records (e.g. the settings).
 * A click on an entry makes it the active one. One entry per type (page, article, content element, module) can be
   active, and it is used by the paste buttons of this type. Another click on the active entry deactivates it, then
   the paste buttons disappear. The tooltip of the paste buttons names the entry.
-* Every list of pages, articles, content elements and modules has the buttons to copy a record to the clipboard
-  and to paste the active entry behind it (pages also into it). Selected records can be copied as a group.
+* Every list of these records has the buttons to copy a record to the clipboard and to paste the active entry behind
+  it (pages also into it, forms with their fields and form fields into a form). Selected records can be copied as a group.
 * Entries can be shared with user groups. Every member may use them. Those who have the permission "Share clipboard
   entries" in the user group may create, rename and delete them.
 * The administration under *System* lists the entries and renames, deletes, shares, exports and imports them.
@@ -166,11 +198,39 @@ The icons are drawn after the clipboard icons of [Lucide](https://lucide.dev) (I
 
 ### Extending
 
-Listen to the events instead of the old hooks:
+**Register your own tables.** A service which implements `ContaoCommunityAlliance\ClipboardBundle\Table\TableProviderInterface`
+is picked up automatically (tag `cca_clipboard.table_provider`) and returns `TableDefinition` objects:
+
+```php
+use ContaoCommunityAlliance\ClipboardBundle\Table\TableDefinition;
+use ContaoCommunityAlliance\ClipboardBundle\Table\TableProviderInterface;
+
+class MyTables implements TableProviderInterface
+{
+    public function tables(): iterable
+    {
+        // The items belong to an order and are copied along with it
+        yield new TableDefinition('tl_my_order', root: true, children: ['tl_my_item'], titleFields: ['number']);
+        yield new TableDefinition('tl_my_item', parents: ['tl_my_order'], titleFields: ['name']);
+    }
+}
+```
+
+The table gets the buttons in the lists of the backend module which has it in its `tables`, the entries in the
+navigation, the pasting and the administration. Several definitions of the same table are merged, so an extension can
+add a parent to a table of someone else. The parents of the content elements (`tl_content`) are found in the `ctable`
+of the DCAs, like Contao does it. News, events and parents of your own work without further ado.
+
+**Events** instead of the old hooks:
 
 * `ContaoCommunityAlliance\ClipboardBundle\Event\ContentTitleEvent` to provide the title of a content element type
+* `ContaoCommunityAlliance\ClipboardBundle\Event\RecordCollectedEvent` when copying, to change the fields of a record
+* `ContaoCommunityAlliance\ClipboardBundle\Event\PrepareRecordEvent` before pasting, to change the fields or to skip
+  the record (with its children)
 * `ContaoCommunityAlliance\ClipboardBundle\Event\RecordPastedEvent` after a record has been created by pasting
 * `ContaoCommunityAlliance\ClipboardBundle\Event\RecordsPastedEvent` after a group has been pasted
+
+The name of the type in the navigation and the administration comes from `MSC.clipboardType_<table>`.
 
 ### Original idea by MAN AT WORK GmbH
 

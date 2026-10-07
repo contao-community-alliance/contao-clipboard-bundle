@@ -18,8 +18,8 @@
 ### Über die Erweiterung
 
 Das Clipboard speichert Seiten, Artikel, Inhaltselemente (auch die von News, Events und anderen Erweiterungen),
-Frontend-Module, Formulare und Formularfelder für längere Zeit und fügt sie bei Bedarf wieder ein, auch in einer
-anderen Contao-Installation.
+Frontend-Module, Formulare und Formularfelder für längere Zeit und fügt sie bei Bedarf wieder ein. Damit lassen sich
+leicht vorgefertigte Zusammenstellungen exportieren und per Import in andere Installationen übertragen.
 
 * Die Einträge stehen im Backend in der Navigation, in einer Gruppe wie bei den Favoriten. Sie sind kontextbezogen:
   Ein Backend-Modul zeigt die Einträge der Tabellen, die es selbst verwaltet. Bei den Seiten stehen die Seiten, bei
@@ -101,7 +101,7 @@ Navigation, das Einfügen und die Verwaltung. Mehrere Definitionen derselben Tab
 Erweiterung einer fremden Tabelle einen Elternteil ergänzen. Die Eltern der Inhaltselemente (`tl_content`) werden wie
 in Contao aus den `ctable` der DCAs gefunden, News, Events und eigene Eltern funktionieren also ohne Zutun.
 
-**Events** statt der alten Hooks:
+**Events** statt der alten Hooks (Version 1 und 2):
 
 * `ContaoCommunityAlliance\ClipboardBundle\Event\ContentTitleEvent`: Titel für einen Inhaltselement-Typ liefern
 * `ContaoCommunityAlliance\ClipboardBundle\Event\RecordCollectedEvent`: beim Kopieren, die Felder eines Datensatzes ändern
@@ -142,7 +142,8 @@ Das (i)-Icon neben der Zahl öffnet den Inhalt des Eintrags als Baum mit Typ und
 
 The clipboard extension offers the possibility to store pages, articles, content elements (also those of news,
 events and other extensions), frontend modules, forms and form fields in a clipboard for an extended time-period and
-to paste them again, also in another installation of Contao.
+to paste them again. With it, prepared compositions can be easily exported and transferred to other installations by
+import.
 
 * The entries of the clipboard are listed in the navigation of the backend, in a group like the favorites. They
   depend on the context: a backend module shows the entries of the tables it manages itself. With the pages those of
@@ -221,7 +222,7 @@ navigation, the pasting and the administration. Several definitions of the same 
 add a parent to a table of someone else. The parents of the content elements (`tl_content`) are found in the `ctable`
 of the DCAs, like Contao does it. News, events and parents of your own work without further ado.
 
-**Events** instead of the old hooks:
+**Events** instead of the old hooks (version 1 and 2):
 
 * `ContaoCommunityAlliance\ClipboardBundle\Event\ContentTitleEvent` to provide the title of a content element type
 * `ContaoCommunityAlliance\ClipboardBundle\Event\RecordCollectedEvent` when copying, to change the fields of a record

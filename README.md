@@ -33,7 +33,8 @@ auch leicht vorgefertigte Zusammenstellungen exportieren und per Import in ander
   Gruppe kopieren.
 * Einträge lassen sich mit Benutzergruppen teilen. Jedes Mitglied darf sie verwenden. Wer das Recht "Clipboard-Einträge
   teilen" in der Benutzergruppe hat, darf sie anlegen, umbenennen und löschen.
-* Die Verwaltung unter *System* listet die Einträge und benennt sie um, löscht, teilt, exportiert und importiert sie.
+* Über den Link „Clipboard verwalten …“ in der Gruppe lassen sich die Einträge auflisten, umbenennen, löschen, teilen,
+  exportieren und importieren.
 
 Die Einträge liegen als YAML-Dateien in `var/clipboard/user/<ID des Benutzers>/` und `var/clipboard/group/<ID der
 Gruppe>/`. Sie sind lesbar und lassen sich mit Export und Import der Verwaltung in eine andere Installation
@@ -126,7 +127,7 @@ Die Buttons einer Seitenliste. Der Tooltip der Einfügen-Buttons nennt den aktiv
 
 ![Die Buttons in der Seitenliste](docs/be_page_include.png)
 
-Die Clipboard-Verwaltung unter "System": Umbenennen, Aktivieren (Auge), Löschen, Exportieren, Teilen mit Gruppen und Import. Die Zahl zeigt alle Datensätze eines Eintrags:
+Die Clipboard-Verwaltung („Clipboard verwalten …“): Umbenennen, Aktivieren (Auge), Löschen, Exportieren, Teilen mit Gruppen und Import. Die Zahl zeigt alle Datensätze eines Eintrags:
 
 ![Die Clipboard-Verwaltung](docs/be_administration.png)
 
@@ -156,7 +157,8 @@ installations by import.
   it (pages also into it, forms with their fields and form fields into a form). Selected records can be copied as a group.
 * Entries can be shared with user groups. Every member may use them. Those who have the permission "Share clipboard
   entries" in the user group may create, rename and delete them.
-* The administration under *System* lists the entries and renames, deletes, shares, exports and imports them.
+* The link "Manage clipboard …" in the group leads to the administration, which lists the entries and renames,
+  deletes, shares, exports and imports them.
 
 The entries are stored as YAML files in `var/clipboard/user/<user id>/` and `var/clipboard/group/<group id>/`.
 They are readable and can be transferred to another installation with the export and import of the
@@ -247,7 +249,7 @@ The buttons of a list of pages. The tooltip of the paste buttons names the activ
 
 ![The buttons in the list of pages](docs/be_page_include.png)
 
-The clipboard administration under "System": rename, activate (eye), delete, export, share with groups and import. The number shows all records of an entry:
+The clipboard administration ("Manage clipboard …"): rename, activate (eye), delete, export, share with groups and import. The number shows all records of an entry:
 
 ![The clipboard administration](docs/be_administration.png)
 

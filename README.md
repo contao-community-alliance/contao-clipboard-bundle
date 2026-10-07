@@ -19,7 +19,7 @@
 
 Das Clipboard speichert Seiten, Artikel, Inhaltselemente (auch die von News, Events und anderen Erweiterungen),
 Frontend-Module, Formulare und Formularfelder für längere Zeit und fügt sie bei Bedarf wieder ein. Damit lassen sich
-leicht vorgefertigte Zusammenstellungen exportieren und per Import in andere Installationen übertragen.
+auch leicht vorgefertigte Zusammenstellungen exportieren und per Import in andere Installationen übertragen.
 
 * Die Einträge stehen im Backend in der Navigation, in einer Gruppe wie bei den Favoriten. Sie sind kontextbezogen:
   Ein Backend-Modul zeigt die Einträge der Tabellen, die es selbst verwaltet. Bei den Seiten stehen die Seiten, bei
@@ -142,8 +142,8 @@ Das (i)-Icon neben der Zahl öffnet den Inhalt des Eintrags als Baum mit Typ und
 
 The clipboard extension offers the possibility to store pages, articles, content elements (also those of news,
 events and other extensions), frontend modules, forms and form fields in a clipboard for an extended time-period and
-to paste them again. With it, prepared compositions can be easily exported and transferred to other installations by
-import.
+to paste them again. With it, prepared compositions can also be easily exported and transferred to other
+installations by import.
 
 * The entries of the clipboard are listed in the navigation of the backend, in a group like the favorites. They
   depend on the context: a backend module shows the entries of the tables it manages itself. With the pages those of

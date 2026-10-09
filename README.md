@@ -1,8 +1,3 @@
-[![Build Status](https://github.com/contao-community-alliance/contao-clipboard-bundle/actions/workflows/diagnostics.yml/badge.svg)](https://github.com/contao-community-alliance/contao-clipboard-bundle/actions)
-[![Latest Version tagged](http://img.shields.io/github/tag/contao-community-alliance/contao-clipboard-bundle.svg)](https://github.com/contao-community-alliance/contao-clipboard-bundle/tags)
-[![Latest Version on Packagist](http://img.shields.io/packagist/v/contao-community-alliance/contao-clipboard-bundle.svg)](https://packagist.org/packages/contao-community-alliance/contao-clipboard-bundle)
-[![Installations via composer per month](http://img.shields.io/packagist/dm/contao-community-alliance/contao-clipboard-bundle.svg)](https://packagist.org/packages/contao-community-alliance/contao-clipboard-bundle)
-
 # Contao Clipboard
 
 > **Preview des Fundraising-Standes.** Der Code ist zurzeit noch nicht öffentlich erreichbar und wird erst nach Ablauf
